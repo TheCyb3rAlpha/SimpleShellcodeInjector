@@ -9,7 +9,12 @@ int main(int argc, char *argv[]) {
     unsigned int char_in_hex;
     char *shellcode=argv[1];
     unsigned int iterations=strlen(shellcode);
-    unsigned int memory_allocation = strlen(shellcode) / 2; 
+    unsigned int memory_allocation = strlen(shellcode) / 2;
+
+    // add hex nops gen here
+    char *NOPS = {};
+    // adding space for NOPS
+    memory_allocation += sizeof(NOPS);
 
     //Converting shellcode to hex 
     for(unsigned int i = 0; i< iterations-1; i++) {
@@ -27,10 +32,10 @@ int main(int argc, char *argv[]) {
     //void *exec = VirtualAlloc(0, memory_allocation, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
 
     //Copying shellcode to heap
-    memcpy(exec, s, memory_allocation);
+    //memcpy(exec, s, memory_allocation);
     // to accomodate nop gen NOPS.
-    // memcpy(exec, nopss, memory_allocation);
-    // memcpy(exec + sizeof(nopss), s, memory_allocation);
+    memcpy(exec, NOPS, sizeof(NOPS));
+    memcpy(exec + sizeof(nopss), s, memory_allocation - siezof(NOPS));
     DWORD ignore;
 
     //Changing memory permissions to X for shellcode execution
